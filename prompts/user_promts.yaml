@@ -1,0 +1,36 @@
+# user_prompts.yaml
+# 存放具体任务指令和动态数据
+search_papers:
+  template: |
+    请搜索关于以下主题的论文：
+    主题: {{topic}}
+    数量: {{max_results}}篇
+    时间范围: {{year_range}}
+    
+    请优先考虑以下会议/期刊：
+    {{#if preferred_venues}}
+    偏好会议: {{preferred_venues}}
+    {{/if}}
+    
+    搜索完成后，请总结主要发现。
+
+download_and_process:
+  template: |
+    请下载以下论文并添加到知识库：
+    {{#each papers}}
+    {{@index}}. 标题: {{this.title}}
+        arXiv ID: {{this.arxiv_id}}
+        PDF链接: {{this.pdf_url}}
+    {{/each}}
+    
+    处理完成后，请生成摘要。
+
+query_knowledge_base:
+  template: |
+    基于知识库回答以下问题：
+    问题: {{question}}
+    
+    当前时间: {{current_time}}
+    用户历史偏好: {{user_preferences}}
+    
+    请提供详细的、有依据的回答。
