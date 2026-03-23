@@ -1,30 +1,49 @@
-from hello_agents import HelloAgentsLLM, ReActAgent, ToolRegistry
-from dotenv import load_dotenv
-# 加载环境变量
-load_dotenv()
-
 '''
-使用ReActAgent范式作为该项目的agent
+init
+add_tool
+run
+_parse_output
+_parse_action
+_parse_action_input
 '''
+from typing import Optional, List
+from hello_agents.core.agent import Agent
+from hello_agents.core.llm import HelloAgentsLLM
+from hello_agents.core.config import Config
+from hello_agents.core.message import Message
+from hello_agents.tools.registry import ToolRegistry
+from hello_agents.agents.react_agent import ReActAgent
+from hello_agents.agents.reflection_agent import ReflectionAgent
 
-# 创建LLM
-llm = HelloAgentsLLM(
-    temperature=0,
-    timeout=60,
-    max_tokens=2048
-)
 
-# 创建工具注册表
-registry = ToolRegistry()
+class GmmpAgent(Agent):
+    def __init__(
+        self,
+        name: str,
+        llm: HelloAgentsLLM,
+        tool_registry: ToolRegistry,
+        system_prompt: Optional[str] = None,
+        config: Optional[Config] = None,
+        max_react_steps: int = 5,
+    ):
+        super().__init__(name, llm, system_prompt, config)
+        self.tool_registry = tool_registry
+        # 初始化react Agent
+        self.react = ReActAgent(
+            name=f"{name}-react",
+            llm=llm,
+            tool_registry=tool_registry,
+            max_steps=max_react_steps,
+            custom_prompt=
+        )
 
-# 创建ReActAgent（使用默认提示词）
-agent = ReActAgent(
-    name="运算助手",
-    llm=llm,
-    tool_registry=registry,
-    max_steps=3,
-)
 
-# 使用工具解决问题
-response = agent.run("3*5+2^2的结果是多少？")
-# print(response)
+    def run(self, input_text: str, **kwargs) -> str:
+        '''
+        React
+        '''
+        self.react.run(input_text, **kwargs)
+
+
+        
+        return final

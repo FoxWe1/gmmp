@@ -1,6 +1,6 @@
 # GMMP
 
-> 一个基于 HelloAgents 的论文检索与下载 Agent，有记忆，支持自主选择工具，搜索论文、下载 PDF、构建本地知识库并进行 RAG 问答。
+> 一个基于 HelloAgents 的论文检索与下载 Agent，有记忆，支持自主选择工具，搜索论文、下载 PDF、下载的内容构造本地知识库+RAG、根据RAG 问答问题。
 
 目录结构：
 见strcture.txt
@@ -66,7 +66,7 @@ python main.py
 
 ## Development
 ### 设计结构
-1. 根据要求，选择适合的agent范式：React+Reflection（执行-反思-优化）组合范式；React可以调用工具，Reflection通过memory进行反思
+1. 使用React范式，思考->调用工具->观察结果->循环
 
 ## Roadmap
 - [ ] 实现基础ReAct Agent
