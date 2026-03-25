@@ -1,89 +1,93 @@
 # GMMP
 
-> 一个基于 HelloAgents 的论文检索与下载 Agent，有记忆，支持自主选择工具，搜索论文、下载 PDF、下载的内容构造本地知识库+RAG、根据RAG 问答问题。
+> 一个基于 HelloAgents 的论文检索与下载 Agent，有记忆功能，能自动整理并恢复历史记忆，支持自主选择工具，搜索论文、下载 PDF，下载的内容构造本地知识库+RAG，RAG会持续增长、根据RAG问答问题。
 
-目录结构：
-见strcture.txt
+## 📝 项目简介
 
-## Quickstart
+- 作为研究僧，手动检索文档复杂低效；对于本地论文无法使用大模型进行高效检索和问答
+- 使用Agent，自动根据需求对论文进行查找、下载、构建知识库、问答
+- 适用于广大研究生同志
 
-### 1) Setup
-```bash
-python -m venv .venv
-source .venv/bin/activate
+## ✨ 核心功能
+
+- [ ] 功能1:根据用户提出的文献内容，自主搜索并下载文献
+- [ ] 功能2:根据本地RAG，对用户提的问题进行搜索和回答
+- [ ] 功能3:Agent有记忆功能，能自动整理并恢复历史记忆
+
+## 🛠️ 技术栈
+
+- HelloAgents框架
+- 使用的智能体范式：ReAct
+- 使用的工具和API
+- 其他依赖库
+
+## 🚀 快速开始
+
+### 环境要求
+
+- Python 3.10+
+- 其他要求
+
+### 安装依赖
+
+
 pip install -r requirements.txt
-```
 
-### 2) Configure environment
-创建 `.env`（参考 `.env.example`，如有）：
 
-```bash
-# LLM
-OPENAI_API_KEY=your_key
-OPENAI_BASE_URL=optional
-OPENAI_MODEL=gpt-4o-mini
+### 配置API密钥
 
-# Optional search backends
-TAVILY_API_KEY=optional
-SERPAPI_API_KEY=optional
 
-# Storage / paths (optional)
-KB_DIR=knowledge_base
-PAPERS_DIR=knowledge_base/papers
-VECTOR_DB_DIR=knowledge_base/vector_db
-```
+# 创建.env文件
+cp .env.example .env
 
-### 3) Run
-```bash
-python main.py
-```
+# 编辑.env文件，填入你的API密钥
 
-## Usage
 
-### Example prompts
-- “帮我搜索 2020 年之后关于 diffusion model 的综述论文，列出 5 篇并下载前 2 篇。”
-- “把刚下载的论文构建成本地知识库，然后回答：作者提出的核心贡献是什么？”
-- “给我这篇论文的 BibTeX 引用。”
+### 运行项目
 
-## Tools
 
-### paper_search_tool
-- 输入：query / limit / filters（如 year_from/year_to）
-- 输出：结构化候选列表（title, authors, year, id, url, pdf_url）
+# 启动Jupyter Notebook
+jupyter lab
 
-### paper_download_tool
-- 输入：arxiv_id 或 pdf_url，download_dir
-- 输出：本地文件路径、大小、hash
+# 打开main.ipynb并运行
 
-### paper_rag_tool
-- 输入：pdf_path 或 paper_id，chunk_size 等
-- 输出：索引构建结果、检索结果、回答
 
-## Configuration
-所有配置集中在：
-- `.env`：密钥与环境相关配置
-- `config.py`：默认参数（目录、chunk 策略、模型选择等）
+## 📖 使用示例
 
-## Development
-### 设计结构
-1. 使用React范式，思考->调用工具->观察结果->循环
+展示如何使用你的项目，最好包含代码示例和运行结果。
 
-## Roadmap
-- [ ] 实现基础ReAct Agent
-- [ ] 添加工具调用
-- [ ] 集成Memory系统
-- [ ] 加入Reflection机制
-- [ ] 使用框架重构
+## 🎯 项目亮点
 
-## Contributing
-欢迎 PR / Issue：
-- 新工具（search / download / parser / vector store）
-- 新数据源适配（arXiv / PubMed / ACL Anthology / OpenAlex）
-- 更稳定的提示词与 tool calling 策略
+- 亮点1:说明
+- 亮点2:说明
+- 亮点3:说明
 
-## License
-TBD
+## 📊 性能评估
 
-## Acknowledgements
-- HelloAgents
-- arXiv API (export.arxiv.org)
+如果有评估结果，展示在这里:
+- 准确率:XX%
+- 响应时间:XX秒
+- 其他指标
+
+## 🔮 未来计划
+
+- [ ] 待实现的功能1
+- [ ] 待实现的功能2
+- [ ] 待优化的部分
+
+## 🤝 贡献指南
+
+欢迎提出Issue和Pull Request！
+
+## 📄 许可证
+
+MIT License
+
+## 👤 作者
+
+- GitHub: [@FoxWe1](https://github.com/FoxWe1)
+- Email: foxwe1@163.com
+
+## 🙏 致谢
+
+感谢Datawhale社区和Hello-Agents项目！

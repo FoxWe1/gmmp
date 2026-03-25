@@ -3,28 +3,35 @@ gmmp/
 ├── requirements.txt                # 项目依赖
 ├── main.py                         # 主程序入口
 ├── config.py                       # 项目配置
+├── README.md                       
 │
 ├── agents/                         # 智能体实现层
 │   ├── __init__.py                 # 让脚本变为可import的包
 │   └── gmmp_agent.py               # 核心智能体类
 │
-├── tools/                          # 自定义工具层 (你的主要开发工作)
+├── tools/                          # 自定义工具层
 │   ├── __init__.py
 │   ├── paper_search_tool.py        # 论文搜索工具
 │   ├── paper_download_tool.py      # 论文下载工具
 │   └── paper_rag_tool.py           # 论文RAG处理工具
 │
-├── memory/                         # 记忆扩展 (可选)
+├── memory/                         # 记忆扩展 
 │   └── custom_memory.py            # 针对论文场景的记忆优化
 │
 ├── knowledge_base/                 # 本地知识库目录
 │   ├── papers/                     # 下载的PDF文件
 │   ├── processed/                  # 处理后的文本
 │   └── vector_db/                  # 向量数据库存储
-│
+│ 
+├── workflows/                      # 工作流
+│   ├── paper_workflow.py
+│   └── session_manager.py
+│  
 ├── prompts/                        # 提示词管理
 │   ├── system_prompts.yaml
 │   └── user_prompts.yaml
+│
+├── downloads/  
 │
 └── tests/                          # 测试
     ├── test_tools.py
