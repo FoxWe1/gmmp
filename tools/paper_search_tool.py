@@ -13,16 +13,17 @@ import json
 
 class PaperSearchTool(Tool):
     def __init__(self):
-        super().__init__(name="paper_search", description="根据要求在指定论文数据库上按关键词搜索论文，返回结构化结果(JSON)")
+        super().__init__(name="paper_search_tool", description="一个arxiv论文搜索工具，根据关键字从arxiv学术数据库搜索论文信息")
 
     def get_parameters(self) -> List[ToolParameter]:
         '''
         声明该工具的“参数规范"
         用于ToolRegistry通过get_tools_description调用，获得工具的参数信息
+        用于支持FunctionCalling
         '''
         return [
             ToolParameter(name="input", type="string", description="检索关键词；也支持形如：'diffusion models | 8' 指定返回条数", required=True),
-            ToolParameter(name="max_results", type="integer", description="返回条数（仅在结构化调用时生效；默认 5）", required=False, default=1),
+            ToolParameter(name="max_results", type="integer", description="返回条数（仅在结构化调用时生效；默认 2）", required=False, default=2),
             ToolParameter(name="start", type="integer", description="起始偏移（默认 0）", required=False, default=0) # 分页，从第几条搜索结果开始返回
         ]
 
@@ -39,13 +40,16 @@ class PaperSearchTool(Tool):
         # 2. 执行搜索
         try:
             payload = self._search_arxiv(query=query, start=start, max_results=max_results)
-            # print(payload)
             print(json.dumps(payload, ensure_ascii=False,indent=2))
             return json.dumps(payload, ensure_ascii=False)
         except Exception as e:
             return f"错误：arXiv 搜索失败：{e}"
 
     def _parse_inline_query(self, text: str) -> tuple[str, Optional[int]]:
+        '''
+        "diffusion models | 8" 表示搜索关键词 "diffusion models"，返回 8 条结果
+        解析出来返回关键词和返回条数，默认返回 1 条结果
+        '''
         m = re.match(r"^(.*)\|\s*(\d+)\s*$", text)
         if not m:
             return text, None
@@ -56,6 +60,8 @@ class PaperSearchTool(Tool):
     def _search_arxiv(self, *, query: str, start: int, max_results: int) -> Dict[str, Any]:
         '''
         搜索arxiv论文数据库
+        支持按照关键词搜索，也支持按照关键词+返回条数的格式搜索
+        例如："diffusion models | 8" 表示搜索关键词 "diffusion models"，返回 8 条结果
         '''
         search_query = f"all:{query}"
         if " " in query and '"' not in query:
